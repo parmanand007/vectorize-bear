@@ -1,5 +1,5 @@
 export default function vectorizeBearLayout({ children, upload, vectorize }) {
-  let isUploaded = false;
+  let isUploaded = true;
   return (
     <section>
       {/* {children} */}

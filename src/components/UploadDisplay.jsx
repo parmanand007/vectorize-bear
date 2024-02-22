@@ -2,6 +2,9 @@ import React from 'react'
 import { AiOutlineFileImage } from "react-icons/ai";
 
 const UploadDisplay = () => {
+  
+
+    console.log("file======")
   return (
     < div className='mx-10 mt-10 ' >
       <div className=''>
