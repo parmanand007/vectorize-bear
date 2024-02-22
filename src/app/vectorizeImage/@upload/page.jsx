@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { FileUploader } from "react-drag-drop-files";
 import UploadDisplay from "../../../components/UploadDisplay";
+import UploadedDocuments from "../../../components/UploadedDocuments";
 const fileTypes = ["JPG", "PNG", "JPEG"];
 
 function Upload() {
@@ -17,7 +18,7 @@ function Upload() {
           handleChange={handleChange}
           name="file"
           types={fileTypes}
-          children={<UploadDisplay />}
+          children={!file ? <UploadDisplay  />:<UploadedDocuments file={file} />}
           maxSize={4}
         />
       </div>

@@ -4,7 +4,7 @@ export default function vectorizeBearLayout({
   vectorize,
   download,
 }) {
-  let isUploaded = false;
+  let isUploaded = true;
   return (
     <section>
       {/* {children} */}
