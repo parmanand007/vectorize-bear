@@ -101,13 +101,13 @@ const Header = () => {
             <title>sign-in-line</title>
             <path
               d="M28,4H12a2,2,0,0,0-2,2H28V30H12V20.2H10V30a2,2,0,0,0,2,2H28a2,2,0,0,0,2-2V6A2,2,0,0,0,28,4Z"
-              class="clr-i-outline clr-i-outline-path-1"
+              className="clr-i-outline clr-i-outline-path-1"
             ></path>
             <path
               d="M15.12,18.46a1,1,0,1,0,1.41,1.41l5.79-5.79L16.54,8.29a1,1,0,0,0-1.41,1.41L18.5,13H4a1,1,0,0,0-1,1,1,1,0,0,0,1,1H18.5Z"
-              class="clr-i-outline clr-i-outline-path-2"
+              className="clr-i-outline clr-i-outline-path-2"
             ></path>
-            <rect x="0" y="0" width="36" height="36" fill-opacity="0" />
+            <rect x="0" y="0" width="36" height="36" fillOpacity="0" />
           </svg>
           <h1 className="font-mono text-xl">SignIn </h1>
         </div>
