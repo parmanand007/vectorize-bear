@@ -8,9 +8,9 @@ export default function vectorizeBearLayout({
   return (
     <section>
       {/* {children} */}
-      {/* {isUploaded && upload} */}
-      {/* {!isUploaded && vectorize} */}
-      {download}
+      {isUploaded && upload}
+      {!isUploaded && vectorize}
+      {/* {download} */}
     </section>
   );
 }
