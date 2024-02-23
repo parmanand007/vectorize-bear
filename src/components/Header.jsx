@@ -1,9 +1,29 @@
-import React from "react";
-
+"use client";
+import React, { useContext, useState } from "react";
+import { Modal } from "react-responsive-modal";
+import "react-responsive-modal/styles.css";
+import "./customStyle.css";
+import { UserAuth } from "../contexts/UserContext";
 const Header = () => {
+  const [open, setOpen] = useState(false);
+  const { googleSignIn, user, logout } = UserAuth();
+  const [toggleUserDropDown, setToggleUserDropDown] = useState(false);
+  const onOpenModal = () => setOpen(true);
+  const onCloseModal = () => setOpen(false);
+  const handleSubmit = async () => {
+    console.log("hello");
+    try {
+      await googleSignIn();
+
+      setOpen(false);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <div>
-      <div className="flex justify-between px-7 py-2">
+      <div className="flex justify-between px-7 py-2 h-[60px]">
         <div className="flex items-center gap-1">
           <svg height="20px" width="20px" viewBox="0 0 512 512">
             <g>
@@ -96,21 +116,131 @@ const Header = () => {
             VectorizeBear
           </h1>
         </div>
-        <div className="flex items-center gap-1 font-semibold">
-          <svg fill="#000000" width="20px" height="20px" viewBox="0 0 36 36">
-            <title>sign-in-line</title>
-            <path
-              d="M28,4H12a2,2,0,0,0-2,2H28V30H12V20.2H10V30a2,2,0,0,0,2,2H28a2,2,0,0,0,2-2V6A2,2,0,0,0,28,4Z"
-              className="clr-i-outline clr-i-outline-path-1"
-            ></path>
-            <path
-              d="M15.12,18.46a1,1,0,1,0,1.41,1.41l5.79-5.79L16.54,8.29a1,1,0,0,0-1.41,1.41L18.5,13H4a1,1,0,0,0-1,1,1,1,0,0,0,1,1H18.5Z"
-              className="clr-i-outline clr-i-outline-path-2"
-            ></path>
-            <rect x="0" y="0" width="36" height="36" fillOpacity="0" />
-          </svg>
-          <h1 className="font-mono text-xl">SignIn </h1>
-        </div>
+        {!user?.displayName && (
+          <div className="flex items-center gap-1 font-semibold">
+            <svg fill="#000000" width="20px" height="20px" viewBox="0 0 36 36">
+              <title>sign-in-line</title>
+              <path
+                d="M28,4H12a2,2,0,0,0-2,2H28V30H12V20.2H10V30a2,2,0,0,0,2,2H28a2,2,0,0,0,2-2V6A2,2,0,0,0,28,4Z"
+                className="clr-i-outline clr-i-outline-path-1"
+              ></path>
+              <path
+                d="M15.12,18.46a1,1,0,1,0,1.41,1.41l5.79-5.79L16.54,8.29a1,1,0,0,0-1.41,1.41L18.5,13H4a1,1,0,0,0-1,1,1,1,0,0,0,1,1H18.5Z"
+                className="clr-i-outline clr-i-outline-path-2"
+              ></path>
+              <rect x="0" y="0" width="36" height="36" fillOpacity="0" />
+            </svg>
+            <h1 className="font-mono text-xl" onClick={onOpenModal}>
+              SignIn{" "}
+            </h1>
+            <Modal
+              open={open}
+              onClose={onCloseModal}
+              center
+              className="bg-slate-400"
+              classNames={{
+                overlay: "customOverlay",
+                modal: "SignInModal",
+              }}
+            >
+              <div className="flex items-center justify-evenly h-[200px] flex-col">
+                <p className="text-2xl text-center font-serif">
+                  Sign In with Google
+                </p>
+                <button className="px-4 py-2 border flex gap-2 border-slate-200  rounded-lg text-slate-600 hover:border-slate-800  hover:text-slate-900  hover:shadow transition duration-150 bg-slate-200">
+                  <img
+                    className="w-6 h-6"
+                    src="https://www.svgrepo.com/show/475656/google-color.svg"
+                    loading="lazy"
+                    alt="google logo"
+                  />
+                  <span onClick={handleSubmit}>Continue with Google</span>
+                </button>
+              </div>
+            </Modal>
+          </div>
+        )}
+        {user?.displayName && (
+          <div class="flex  items-end  flex-col">
+            <button
+              type="button"
+              class="flex text-sm bg-gray-800 border-black border-2 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 w-fit"
+              id="user-menu-button"
+              aria-expanded="false"
+              data-dropdown-toggle="user-dropdown"
+              data-dropdown-placement="bottom"
+              onClick={() => {
+                setToggleUserDropDown(!toggleUserDropDown);
+                handleSubmit;
+              }}
+            >
+              <span class="sr-only">Open user menu</span>
+              <img
+                class="w-8 h-8 rounded-full overflow-hidden"
+                src={"./images/user.png"}
+                alt="user photo"
+              />
+            </button>
+
+            {toggleUserDropDown && (
+              <div
+                class="z-50  my-2 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
+                id="user-dropdown"
+              >
+                <div class="px-4 py-3">
+                  <span class="block text-sm text-gray-900 dark:text-white">
+                    {user?.displayName}
+                  </span>
+                  <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">
+                    {user?.email}
+                  </span>
+                </div>
+                <ul class="py-2" aria-labelledby="user-menu-button">
+                  {/* <li>
+                    <a
+                      href="#"
+                      class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                    >
+                      Dashboard
+                    </a>
+                  </li> */}
+                  {/* <li>
+                    <a
+                      href="#"
+                      class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                    >
+                      Settings
+                    </a>
+                  </li> */}
+                  {/* <li>
+                    <a
+                      href="#"
+                      class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                    >
+                      Earnings
+                    </a>
+                  </li> */}
+                  <li>
+                    <a
+                      href="#"
+                      class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                      onClick={async () => {
+                        console.log("hello");
+                        try {
+                          await logout();
+                        } catch (e) {
+                          console.log(e);
+                        }
+                      }}
+                    >
+                      Sign out
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
