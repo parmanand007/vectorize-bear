@@ -4,23 +4,15 @@ import { Modal } from "react-responsive-modal";
 import "react-responsive-modal/styles.css";
 import "./customStyle.css";
 import { UserAuth } from "../contexts/UserContext";
+import Plans from "./Plans";
+import { redirect } from "next/navigation";
+import SignInModel from "../utilities/SignInModel";
 const Header = () => {
   const [open, setOpen] = useState(false);
-  const { googleSignIn, user, logout } = UserAuth();
+  const { user, logout } = UserAuth();
+  const [Upgrade, setUpgrade] = useState(false);
   const [toggleUserDropDown, setToggleUserDropDown] = useState(false);
   const onOpenModal = () => setOpen(true);
-  const onCloseModal = () => setOpen(false);
-  const handleSubmit = async () => {
-    console.log("hello");
-    try {
-      await googleSignIn();
-
-      setOpen(false);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
   return (
     <div>
       <div className="flex justify-between px-7 py-2 h-[60px]">
@@ -133,7 +125,8 @@ const Header = () => {
             <h1 className="font-mono text-xl" onClick={onOpenModal}>
               SignIn{" "}
             </h1>
-            <Modal
+            <SignInModel setOpen={setOpen} open={open} />
+            {/* <Modal
               open={open}
               onClose={onCloseModal}
               center
@@ -157,46 +150,57 @@ const Header = () => {
                   <span onClick={handleSubmit}>Continue with Google</span>
                 </button>
               </div>
-            </Modal>
+            </Modal> */}
           </div>
         )}
         {user?.displayName && (
-          <div class="flex  items-end  flex-col">
+          <div className="bg-red-20 flex">
             <button
-              type="button"
-              class="flex text-sm bg-gray-800 border-black border-2 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 w-fit"
-              id="user-menu-button"
-              aria-expanded="false"
-              data-dropdown-toggle="user-dropdown"
-              data-dropdown-placement="bottom"
               onClick={() => {
-                setToggleUserDropDown(!toggleUserDropDown);
-                handleSubmit;
+                setUpgrade(true);
               }}
+              type="button"
+              className=" absolute right-20 focus:outline-none text-yellow-800 bg-white font-medium rounded-lg text-s px-2 py-1 me-1 mb-1  w-30 border-yellow-800 border-2"
             >
-              <span class="sr-only">Open user menu</span>
-              <img
-                class="w-8 h-8 rounded-full overflow-hidden"
-                src={"./images/user.png"}
-                alt="user photo"
-              />
+              Upgrade
             </button>
+            {Upgrade && <Plans setUpgrade={setUpgrade} />}
+            <div className="flex  w-fit mt-1 ">
+              <div class="flex  items-end  flex-col">
+                <button
+                  type="button"
+                  class="flex text-sm bg-gray-800  rounded-full md:me-0  w-fit"
+                  id="user-menu-button"
+                  aria-expanded="false"
+                  data-dropdown-toggle="user-dropdown"
+                  data-dropdown-placement="bottom"
+                  onClick={() => {
+                    setToggleUserDropDown(!toggleUserDropDown);
+                  }}
+                >
+                  <span class="sr-only">Open user menu</span>
+                  <img
+                    class="w-8 h-8 rounded-full overflow-hidden"
+                    src={"./images/user.png"}
+                    alt="user photo"
+                  />
+                </button>
 
-            {toggleUserDropDown && (
-              <div
-                class="z-50  my-2 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
-                id="user-dropdown"
-              >
-                <div class="px-4 py-3">
-                  <span class="block text-sm text-gray-900 dark:text-white">
-                    {user?.displayName}
-                  </span>
-                  <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">
-                    {user?.email}
-                  </span>
-                </div>
-                <ul class="py-2" aria-labelledby="user-menu-button">
-                  {/* <li>
+                {toggleUserDropDown && (
+                  <div
+                    class="z-50  my-2 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
+                    id="user-dropdown"
+                  >
+                    <div class="px-4 py-3">
+                      <span class="block text-sm text-gray-900 dark:text-white">
+                        {user?.displayName}
+                      </span>
+                      <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">
+                        {user?.email}
+                      </span>
+                    </div>
+                    <ul class="py-2" aria-labelledby="user-menu-button">
+                      {/* <li>
                     <a
                       href="#"
                       class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
@@ -204,7 +208,7 @@ const Header = () => {
                       Dashboard
                     </a>
                   </li> */}
-                  {/* <li>
+                      {/* <li>
                     <a
                       href="#"
                       class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
@@ -212,7 +216,7 @@ const Header = () => {
                       Settings
                     </a>
                   </li> */}
-                  {/* <li>
+                      {/* <li>
                     <a
                       href="#"
                       class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
@@ -220,25 +224,27 @@ const Header = () => {
                       Earnings
                     </a>
                   </li> */}
-                  <li>
-                    <a
-                      href="#"
-                      class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                      onClick={async () => {
-                        console.log("hello");
-                        try {
-                          await logout();
-                        } catch (e) {
-                          console.log(e);
-                        }
-                      }}
-                    >
-                      Sign out
-                    </a>
-                  </li>
-                </ul>
+                      <li>
+                        <a
+                          href="#"
+                          class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                          onClick={async () => {
+                            console.log("hello");
+                            try {
+                              await logout();
+                            } catch (e) {
+                              console.log(e);
+                            }
+                          }}
+                        >
+                          Sign out
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                )}
               </div>
-            )}
+            </div>
           </div>
         )}
       </div>

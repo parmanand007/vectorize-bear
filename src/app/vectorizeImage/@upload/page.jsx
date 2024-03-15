@@ -1,17 +1,10 @@
 "use client";
 import React, { useState } from "react";
-import { FileUploader } from "react-drag-drop-files";
 import UploadDisplay from "../../../components/UploadDisplay";
-import UploadedDocuments from "../../../components/UploadedDocuments";
-const fileTypes = ["JPG", "PNG", "JPEG"];
+import { UserAuth } from "../../../contexts/UserContext";
 
 function Upload() {
-  const [file, setFile] = useState(null);
-  const handleChange = (file) => {
-    setFile(file);
-  };
-  console.log("file data", file);
-
+  const { setFile } = UserAuth();
   return (
     <>
       <UploadDisplay setFile={setFile} />
