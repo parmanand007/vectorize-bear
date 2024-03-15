@@ -1,22 +1,28 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
+import { UserAuth } from "../../../contexts/UserContext";
+import SignInModel from "../../../utilities/SignInModel";
 
 const Download = () => {
+  const { setIsUploaded, setIsVectorize, user } = UserAuth();
+  const [open, setOpen] = useState(false);
+  const onOpenModal = () => setOpen(true);
   return (
     <div className=" flex gap-10 h-[80vh] w-[100vw] justify-center items-center">
       <div className="flex flex-col cursor-pointer ">
         <p className="text-center p-2">Original Image </p>
-        <div className=" flex justify-center items-center min-w-80 h-[350px] bg-violet-600 bg-[url('/images/checked_back.png')]">
+        <div className=" flex rounded-lg border-2 border-slate-300  justify-center items-center min-w-80 h-[350px] bg-violet-600 bg-[url('/images/checked_back.png')] bg-cover">
           <img src="/images/imgback.png" alt="" height="200px" width="300px" />
         </div>
       </div>
       <div className="flex flex-col cursor-pointer ">
         <p className="text-center p-2">Vectorize Image </p>
-        <div className=" flex justify-center items-center min-w-80 h-[350px] bg-violet-600 bg-[url('/images/checked_back.png')] ">
+        <div className=" flex rounded-lg border-2 border-slate-300  justify-center items-center min-w-80 h-[350px] bg-violet-600 bg-[url('/images/checked_back.png')] bg-cover ">
           <img src="/images/imgback.png" alt="" height="200px" width="300px" />
         </div>
       </div>
       <div className="min-w-60 h-[300px] flex flex-col gap-5 ">
-        <div className=" min-h-[60%] bg-gray-100 p-5 flex flex-col justify-between">
+        <div className=" min-h-[60%] rounded-lg border-2 bg-gray-100 p-5 flex flex-col justify-between">
           <div>
             <p>Useful tip 🥳</p>
             <p className="flex-wrap"> you can extend image using a new AI</p>
@@ -31,6 +37,10 @@ const Download = () => {
         <button
           type="button"
           className="focus:outline-none text-yellow-800 bg-white font-medium rounded-lg text-xl px-5 py-2 me-2 mb-2  w-full border-yellow-800 border-2"
+          onClick={() => {
+            setIsUploaded(false);
+            setIsVectorize(false);
+          }}
         >
           Re-Upload
         </button>
@@ -38,7 +48,8 @@ const Download = () => {
           type="button"
           className="focus:outline-none  text-yellow-800 bg-orange-200 hover:bg-orange-300 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-xl px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900 w-full"
         >
-          Download
+          {user ? "Download" : <div onClick={onOpenModal}> Sign In</div>}
+          <SignInModel setOpen={setOpen} open={open} />
         </button>
       </div>
     </div>

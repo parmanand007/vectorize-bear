@@ -9,6 +9,9 @@ const AuthContext = createContext();
 import { auth } from "../firebase/firebase";
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState();
+  const [file, setFile] = useState();
+  const [isVectorize, setIsVectorize] = useState(false);
+  const [isUploaded, setIsUploaded] = useState(false);
   const googleSignIn = () => {
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider);
@@ -26,7 +29,19 @@ export const AuthContextProvider = ({ children }) => {
     };
   });
   return (
-    <AuthContext.Provider value={{ googleSignIn, logout, user }}>
+    <AuthContext.Provider
+      value={{
+        googleSignIn,
+        logout,
+        user,
+        isUploaded,
+        setIsUploaded,
+        file,
+        setFile,
+        isVectorize,
+        setIsVectorize,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

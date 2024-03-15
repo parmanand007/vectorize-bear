@@ -1,9 +1,11 @@
 import React from "react";
 import { AiOutlineFileImage } from "react-icons/ai";
 import ImageUploading from "react-images-uploading";
+import { UserAuth } from "../contexts/UserContext";
 
 const UploadDisplay = ({ setFile }) => {
   const [images, setImages] = React.useState([]);
+  const { setIsUploaded } = UserAuth();
   const maxNumber = 69;
   const onChange = (imageList, addUpdateIndex) => {
     // data for submit
@@ -35,10 +37,10 @@ const UploadDisplay = ({ setFile }) => {
             errors,
           }) => (
             // write your building UI
-            <div className="upload__image-wrapper h-[100vh] flex items-center justify-center flex-col gap-4">
+            <div className="upload__image-wrapper h-[100vh] flex items-center justify-center flex-col gap-4 ">
               {imageList.length == 0 && (
                 <div
-                  className="bg-gray-200 h-[300px] w-[40%] mx-auto flex flex-col items-center justify-center  border-dotted rounded border-2 border-gray-400 gap-4 hover:cursor-pointer"
+                  className="bg-gray-200 h-[300px] w-[40%] mx-auto flex flex-col items-center justify-center  border-dotted rounded-xl border-2 border-gray-400 gap-4 hover:cursor-pointer"
                   style={isDragging ? { color: "red" } : null}
                   onClick={onImageUpload}
                   {...dragProps}
@@ -80,11 +82,21 @@ const UploadDisplay = ({ setFile }) => {
                 </div>
               )}
               {imageList.length > 0 && (
-                <div
-                  onClick={onImageRemoveAll}
-                  className="bg-slate-200 border-2 border-slate-500 rounded p-2 hover:cursor-pointer"
-                >
-                  Remove all images
+                <div className="flex gap-2">
+                  <div
+                    onClick={() => {
+                      setIsUploaded(true);
+                    }}
+                    className="w-[100px] text-center bg-orange-200 border-2 border-orange-500 rounded p-2 hover:cursor-pointer"
+                  >
+                    Next
+                  </div>
+                  <div
+                    onClick={onImageRemoveAll}
+                    className="bg-slate-200 border-2 border-slate-500 rounded p-2 hover:cursor-pointer"
+                  >
+                    Remove all images
+                  </div>
                 </div>
               )}
               {errors && (

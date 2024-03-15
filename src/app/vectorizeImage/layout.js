@@ -1,16 +1,21 @@
+"use client";
+
+import { useState } from "react";
+import { UserAuth } from "../../contexts/UserContext";
+
 export default function vectorizeBearLayout({
   children,
   upload,
   vectorize,
   download,
 }) {
-  let isUploaded = false;
+  const { isUploaded, setISUploaded, isVectorize } = UserAuth();
   return (
     <section>
       {/* {children} */}
       {!isUploaded && upload}
-      {!isUploaded && vectorize}
-      {/* {download} */}
+      {isUploaded && !isVectorize && vectorize}
+      {isVectorize && download}
     </section>
   );
 }

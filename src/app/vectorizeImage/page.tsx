@@ -1,7 +1,7 @@
 import React from "react";
 
 const vectorizeBear = () => {
-  return <div>hello</div>;
+  return <div></div>;
 };
 
 export default vectorizeBear;
