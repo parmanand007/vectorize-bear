@@ -1,27 +1,23 @@
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { IoIosSettings } from "react-icons/io";
 import { LiaClipboardListSolid } from "react-icons/lia";
 import { VscSignOut } from "react-icons/vsc";
+import { Modal } from "react-responsive-modal";
 import "react-responsive-modal/styles.css";
 import "./customStyle.css";
 import { UserAuth } from "../contexts/UserContext";
 import Plans from "./Plans";
+import { redirect } from "next/navigation";
 import SignInModel from "../utilities/SignInModel";
-import { FaQuestion } from "react-icons/fa";
+import { FaQuestion, FaSignOutAlt } from "react-icons/fa";
 import Credits from "./Credits";
-
 const Header = () => {
   const [open, setOpen] = useState(false);
   const { user, logout } = UserAuth();
   const [Upgrade, setUpgrade] = useState(false);
-  const [ModalButtonType, setModalButtonType] = useState("");
   const [toggleUserDropDown, setToggleUserDropDown] = useState(false);
-  const onOpenModal = (e) => {
-    console.log(e.target.innerText.toLowerCase());
-    setModalButtonType(e.target.innerText.toLowerCase());
-    setOpen(true);
-  };
+  const onOpenModal = () => setOpen(true);
   return (
     <div>
       <div className="flex justify-between px-7 py-2 h-[60px]">
@@ -43,35 +39,47 @@ const Header = () => {
               <rect x="0" y="0" width="36" height="36" fillOpacity="0" />
             </svg>
             <h1 className="font-mono text-xl" onClick={onOpenModal}>
-              SignIn
+              SignIn{" "}
             </h1>
-            <SignInModel
-              heading={
-                ModalButtonType == "signin"
-                  ? "Sign In with Google"
-                  : "Upgrade Now"
-              }
-              title={
-                ModalButtonType == "signin"
-                  ? ""
-                  : "your don't have credits enough"
-              }
-              buttonType={ModalButtonType}
-              setOpen={setOpen}
+            <SignInModel setOpen={setOpen} open={open} />
+            {/* <Modal
               open={open}
-            />
+              onClose={onCloseModal}
+              center
+              className="bg-slate-400"
+              classNames={{
+                overlay: "customOverlay",
+                modal: "SignInModal",
+              }}
+            >
+              <div className="flex items-center justify-evenly h-[200px] flex-col">
+                <p className="text-2xl text-center font-serif">
+                  Sign In with Google
+                </p>
+                <button className="px-4 py-2 border flex gap-2 border-slate-200  rounded-lg text-slate-600 hover:border-slate-800  hover:text-slate-900  hover:shadow transition duration-150 bg-slate-200">
+                  <img
+                    className="w-6 h-6"
+                    src="https://www.svgrepo.com/show/475656/google-color.svg"
+                    loading="lazy"
+                    alt="google logo"
+                  />
+                  <span onClick={handleSubmit}>Continue with Google</span>
+                </button>
+              </div>
+            </Modal> */}
           </div>
         )}
         {user?.displayName && (
           <div className="bg-red-20 flex">
             <button
-              onClick={onOpenModal}
+              onClick={() => {
+                setUpgrade(true);
+              }}
               type="button"
-              className=" absolute top-[12px] right-[280px] focus:outline-none text-baseBrown bg-white font-medium rounded-lg text-s px-2 py-1 me-1 mb-1  w-30 border-yellow-800 border-2"
+              className=" absolute top-[12px] right-[280px] focus:outline-none text-yellow-800 bg-white font-medium rounded-lg text-s px-2 py-1 me-1 mb-1  w-30 border-yellow-800 border-2"
             >
               Upgrade
             </button>
-
             <Credits />
             {Upgrade && <Plans setUpgrade={setUpgrade} />}
             <div className="flex  w-fit mt-1 ">
@@ -157,18 +165,6 @@ const Header = () => {
           </div>
         )}
       </div>
-      {/* <UpgradeModal /> */}
-      <SignInModel
-        heading={
-          ModalButtonType == "signin" ? "Sign In with Google" : "Upgrade Now"
-        }
-        title={
-          ModalButtonType == "signin" ? "" : "your don't have credits enough"
-        }
-        buttonType={ModalButtonType}
-        setOpen={setOpen}
-        open={open}
-      />
     </div>
   );
 };
