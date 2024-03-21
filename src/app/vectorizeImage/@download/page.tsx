@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { UserAuth } from "../../../contexts/UserContext";
 import SignInModel from "../../../utilities/SignInModel";
+import UsefulTip from "../../../components/UsefulTip";
 
 const Download = () => {
   const { setIsUploaded, setIsVectorize, user } = UserAuth();
@@ -21,8 +22,8 @@ const Download = () => {
           <img src="/images/imgback.png" alt="" height="200px" width="300px" />
         </div>
       </div>
-      <div className="min-w-60 h-[300px] flex flex-col gap-5 ">
-        <div className=" min-h-[60%] rounded-lg border-2 bg-gray-100 p-5 flex flex-col justify-between">
+      <div className="min-w-60 h-[370px] flex flex-col gap-2 mt-14">
+        {/* <div className=" min-h-[60%] rounded-lg border-2 bg-gray-100 p-5 flex flex-col justify-between">
           <div>
             <p>Useful tip 🥳</p>
             <p className="flex-wrap"> you can extend image using a new AI</p>
@@ -33,10 +34,11 @@ const Download = () => {
           >
             Extend my image
           </button>
-        </div>
+        </div> */}
+        <UsefulTip />
         <button
           type="button"
-          className="focus:outline-none text-yellow-800 bg-white font-medium rounded-lg text-xl px-5 py-2 me-2 mb-2  w-full border-yellow-800 border-2"
+          className="focus:outline-none text-baseBrown bg-white font-medium rounded-lg text-lg px-7 py-3 mb-2 mt-3 w-full border-yellow-800 border-2"
           onClick={() => {
             setIsUploaded(false);
             setIsVectorize(false);
@@ -46,7 +48,7 @@ const Download = () => {
         </button>
         <button
           type="button"
-          className="focus:outline-none  text-yellow-800 bg-orange-200 hover:bg-orange-300 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-xl px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900 w-full"
+          className="focus:outline-none  text-baseBrown bg-orange-200 hover:bg-orange-300 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-lg px-5 py-3 me-2 mb-2 dark:focus:ring-yellow-900 w-full"
         >
           {user ? "Download" : <div onClick={onOpenModal}> Sign In</div>}
           <SignInModel setOpen={setOpen} open={open} />

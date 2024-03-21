@@ -2,9 +2,13 @@
 
 import React, { useState } from "react";
 import { UserAuth } from "../../../contexts/UserContext";
+import SignInModel from "../../../utilities/SignInModel";
+import UsefulTip from "../../../components/UsefulTip";
 
 const Vectorize = () => {
-  const { file, setIsUploaded } = UserAuth();
+  const { file, setIsUploaded, user } = UserAuth();
+  const [open, setOpen] = useState(false);
+  const onOpenModal = () => setOpen(true);
   const { setIsVectorize } = UserAuth();
 
   console.log(file);
@@ -23,36 +27,33 @@ const Vectorize = () => {
           );
         })}
       </div>
-      <div className="min-w-60 h-[300px] flex flex-col gap-2">
-        <div className=" min-h-[60%] bg-gray-100 p-5 flex flex-col rounded-lg border-2 ">
-          <div>
-            <p>Useful tip 🥳</p>
-            <p className="flex-wrap"> you can extend image using a new AI</p>
-          </div>
-          <button
-            type="button"
-            className="focus:outline-none items-end  text-white bg-orange-800  focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900 w-[90%] m-auto"
-          >
-            Extend my image
-          </button>
-        </div>
+      <div className="min-w-60 h-[370px] flex flex-col gap-2 mt-7">
+        <UsefulTip />
         <button
           onClick={() => {
             setIsUploaded(false);
           }}
           type="button"
-          className="focus:outline-none text-yellow-800 bg-white font-medium rounded-lg text-xl px-5 py-2 me-2 mb-2  w-full border-yellow-800 border-2"
+          className="focus:outline-none text-baseBrown bg-white font-medium rounded-lg  text-lg px-5 py-3 me-2 mb-2 mt-3 w-full border-yellow-800 border-2"
         >
           Re-Upload
         </button>
         <button
-          onClick={() => {
-            setIsVectorize(true);
-          }}
           type="button"
-          className="focus:outline-none  text-yellow-800 bg-orange-200 hover:bg-orange-300 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-xl px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900 w-full"
+          className="focus:outline-none  text-baseBrown bg-orange-200 hover:bg-orange-300 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-lg px-5 py-3 me-2 mb-2 dark:focus:ring-yellow-900 w-full"
         >
-          Vectorize image
+          {user ? (
+            <div
+              onClick={() => {
+                setIsVectorize(true);
+              }}
+            >
+              Vectorize Image
+            </div>
+          ) : (
+            <div onClick={onOpenModal}> Sign In</div>
+          )}
+          <SignInModel setOpen={setOpen} open={open} />
         </button>
       </div>
     </div>

@@ -17,6 +17,8 @@ module.exports = {
         secondary: "#dfdfdf",
         background: "#262626",
         secondaryBg: "#3d3d3d",
+        baseBrown: "var(--base-brown)",
+        baseCream: "var(--base-cream)",
       },
     },
   },
