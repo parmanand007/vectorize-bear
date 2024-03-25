@@ -1,4 +1,29 @@
 .SignInModal {
   max-width: 350px;
+  height: 250px;
   width: 100%;
+}
+
+.SignInModal .container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.SignInModal .container div {
+  margin-bottom: 10px;
+}
+.SignInModal .up-btn {
+  background-color: #f3c688;
+  color: #625141;
+  font-weight: 500;
+  border: 2px solid;
+}
+.SignInModal .up-btn:hover {
+  opacity: 0.9;
 }

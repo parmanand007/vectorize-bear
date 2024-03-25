@@ -31,7 +31,7 @@ const SignInModel = ({
         modal: "SignInModal",
       }}
     >
-      <div className="flex items-center justify-evenly h-[200px] flex-col">
+      <div className=" container">
         <div>
           <p className="text-2xl font-serif">{heading}</p>
           {title && <p>{title}</p>}
@@ -47,7 +47,7 @@ const SignInModel = ({
             <span onClick={handleSubmit}>Continue with Google</span>
           </button>
         ) : (
-          <button className="px-4 py-2 border justify-center flex gap-2 border-slate-200  rounded-lg text-slate-600 hover:border-slate-800  hover:text-slate-900  hover:shadow transition duration-150 bg-slate-200 w-[90%]">
+          <button className=" up-btn px-4 py-2 border justify-center flex gap-2 border-slate-200  rounded-lg text-slate-600 hover:border-slate-800  hover:text-slate-900  hover:shadow transition duration-150 bg-slate-200 w-[90%]">
             <span onClick={handleSubmit}>Upgrade Now</span>
           </button>
         )}

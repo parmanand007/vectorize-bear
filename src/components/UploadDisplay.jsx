@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineFileImage } from "react-icons/ai";
 import ImageUploading from "react-images-uploading";
 import { UserAuth } from "../contexts/UserContext";
+import SignInModel from "../utilities/SignInModel";
+import { redirect } from "next/navigation";
 
 const UploadDisplay = ({ setFile }) => {
   const [images, setImages] = React.useState([]);
-  const { setIsUploaded } = UserAuth();
+  const [open, setOpen] = useState(false);
+  const onOpenModal = () => {
+    setOpen(true);
+  };
+  const { setIsUploaded, user } = UserAuth();
   const maxNumber = 69;
   const onChange = (imageList, addUpdateIndex) => {
     // data for submit
@@ -14,7 +20,6 @@ const UploadDisplay = ({ setFile }) => {
     setImages(imageList);
   };
 
-  console.log("file======");
   return (
     <>
       <div className="App">
@@ -42,7 +47,10 @@ const UploadDisplay = ({ setFile }) => {
                 <div
                   className="bg-gray-200 h-[300px] w-[40%] mx-auto flex flex-col items-center justify-center  border-dotted rounded-xl border-2 border-gray-400 gap-4 hover:cursor-pointer"
                   style={isDragging ? { color: "red" } : null}
-                  onClick={onImageUpload}
+                  onClick={async () => {
+                    if (!user) onOpenModal();
+                    else onImageUpload();
+                  }}
                   {...dragProps}
                 >
                   <div className="flex justify-center">
@@ -83,14 +91,18 @@ const UploadDisplay = ({ setFile }) => {
               )}
               {imageList.length > 0 && (
                 <div className="flex gap-2">
-                  <div
+                  <button
                     onClick={() => {
                       setIsUploaded(true);
                     }}
-                    className="w-[100px] text-center bg-orange-200 border-2 border-orange-500 rounded p-2 hover:cursor-pointer"
+                    className={
+                      user
+                        ? "w-[100px] text-center bg-orange-200 border-2 border-orange-500 rounded p-2 hover:cursor-pointer"
+                        : "w-[100px] text-center opacity-50 text-orange-800 bg-orange-200 border-2 border-orange-500 rounded p-2  hover:cursor-not-allowed"
+                    }
                   >
                     Next
-                  </div>
+                  </button>
                   <div
                     onClick={onImageRemoveAll}
                     className="bg-slate-200 border-2 border-slate-500 rounded p-2 hover:cursor-pointer"
@@ -99,6 +111,7 @@ const UploadDisplay = ({ setFile }) => {
                   </div>
                 </div>
               )}
+
               {errors && (
                 <div>
                   {errors.maxNumber && (
@@ -122,6 +135,24 @@ const UploadDisplay = ({ setFile }) => {
                     </span>
                   )}
                 </div>
+              )}
+              {!user && (
+                <span className=" w-[80%] text-center  ">
+                  <SignInModel
+                    heading={"Sign In with Google"}
+                    buttonType="signin"
+                    setOpen={setOpen}
+                    open={open}
+                  />
+                  {/* Please{" "}
+                  <a
+                    className=" underline text-blue-400 cursor-pointer"
+                    onClick={onOpenModal}
+                  >
+                    SignIn
+                  </a>{" "}
+                  to proceed further */}
+                </span>
               )}
             </div>
           )}

@@ -18,7 +18,6 @@ const Header = () => {
   const [ModalButtonType, setModalButtonType] = useState("");
   const [toggleUserDropDown, setToggleUserDropDown] = useState(false);
   const onOpenModal = (e) => {
-    console.log(e.target.innerText.toLowerCase());
     setModalButtonType(e.target.innerText.toLowerCase());
     setOpen(true);
   };
@@ -45,21 +44,6 @@ const Header = () => {
             <h1 className="font-mono text-xl" onClick={onOpenModal}>
               SignIn
             </h1>
-            <SignInModel
-              heading={
-                ModalButtonType == "signin"
-                  ? "Sign In with Google"
-                  : "Upgrade Now"
-              }
-              title={
-                ModalButtonType == "signin"
-                  ? ""
-                  : "your don't have credits enough"
-              }
-              buttonType={ModalButtonType}
-              setOpen={setOpen}
-              open={open}
-            />
           </div>
         )}
         {user?.displayName && (
@@ -121,6 +105,10 @@ const Header = () => {
                         <a
                           href="#"
                           class=" flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                          onClick={() => {
+                            setUpgrade(true);
+                            setToggleUserDropDown(!toggleUserDropDown);
+                          }}
                         >
                           <LiaClipboardListSolid /> Plans
                         </a>
@@ -160,10 +148,12 @@ const Header = () => {
       {/* <UpgradeModal /> */}
       <SignInModel
         heading={
-          ModalButtonType == "signin" ? "Sign In with Google" : "Upgrade Now"
+          ModalButtonType == "signin"
+            ? "Sign In with Google"
+            : "Upgrade Your Plan"
         }
         title={
-          ModalButtonType == "signin" ? "" : "your don't have credits enough"
+          ModalButtonType == "signin" ? "" : "your don't have credits enough."
         }
         buttonType={ModalButtonType}
         setOpen={setOpen}

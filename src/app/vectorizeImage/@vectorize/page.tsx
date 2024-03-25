@@ -8,7 +8,11 @@ import UsefulTip from "../../../components/UsefulTip";
 const Vectorize = () => {
   const { file, setIsUploaded, user } = UserAuth();
   const [open, setOpen] = useState(false);
-  const onOpenModal = () => setOpen(true);
+  const [ModalButtonType, setModalButtonType] = useState("");
+  const onOpenModal = (e) => {
+    setModalButtonType(e.target.innerText.toLowerCase());
+    setOpen(true);
+  };
   const { setIsVectorize } = UserAuth();
 
   console.log(file);
@@ -51,9 +55,23 @@ const Vectorize = () => {
               Vectorize Image
             </div>
           ) : (
-            <div onClick={onOpenModal}> Sign In</div>
+            <div onClick={onOpenModal}> SignIn</div>
           )}
-          <SignInModel setOpen={setOpen} open={open} />
+          <SignInModel
+            heading={
+              ModalButtonType == "signin"
+                ? "Sign In with Google"
+                : "Upgrade Your Plan"
+            }
+            title={
+              ModalButtonType == "signin"
+                ? ""
+                : "your don't have credits enough."
+            }
+            buttonType={ModalButtonType}
+            setOpen={setOpen}
+            open={open}
+          />
         </button>
       </div>
     </div>
