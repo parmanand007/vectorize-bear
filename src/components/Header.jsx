@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { IoIosSettings } from "react-icons/io";
 import { LiaClipboardListSolid } from "react-icons/lia";
+import { LiaCrownSolid } from "react-icons/lia";
 import { VscSignOut } from "react-icons/vsc";
 import "react-responsive-modal/styles.css";
 import "./customStyle.css";
@@ -23,9 +24,18 @@ const Header = () => {
   };
   return (
     <div>
-      <div className="flex justify-between px-7 py-2 h-[60px]">
+      <div className="flex justify-between  px-2 md:px-7 md:py-2 h-[60px]">
         <div className="flex items-center gap-1">
-          <img width="200px" src="./images/VB.png"></img>
+          <img
+            width="200px"
+            src="./images/VB.png"
+            className="hidden md:flex"
+          ></img>
+          <img
+            width="70px"
+            src="./images/logo.png"
+            className=" m-0 p-0 md:hidden"
+          ></img>
         </div>
         {!user?.displayName && (
           <div className="flex items-center gap-1 font-semibold">
@@ -51,15 +61,22 @@ const Header = () => {
             <button
               onClick={onOpenModal}
               type="button"
-              className=" absolute top-[12px] right-[280px] focus:outline-none text-baseBrown bg-white font-medium rounded-lg text-s px-2 py-1 me-1 mb-1  w-30 border-yellow-800 border-2"
+              className=" hidden absolute top-[12px] right-[280px] focus:outline-none text-baseBrown bg-white font-medium rounded-lg text-s px-2 py-1 me-1 mb-1  w-30 border-yellow-800 border-2 md:block"
             >
               Upgrade
+            </button>
+            <button
+              onClick={onOpenModal}
+              type="button"
+              className="  absolute top-[12px] right-[140px] focus:outline-none text-baseBrown bg-white font-medium rounded-full text-s px-2 py-1 me-1 mb-1  w-30 border-yellow-800 border-2 md:hidden"
+            >
+              <LiaCrownSolid />
             </button>
 
             <Credits />
             {Upgrade && <Plans setUpgrade={setUpgrade} />}
             <div className="flex  w-fit mt-1 ">
-              <div class="flex  items-end  flex-col">
+              <div class="flex  items-end  flex-col   mt-[5px]">
                 <button
                   type="button"
                   class="flex text-sm   rounded-full md:me-0  w-fit"

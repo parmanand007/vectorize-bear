@@ -17,21 +17,21 @@ const Vectorize = () => {
 
   console.log(file);
   return (
-    <div className=" flex gap-10 h-[80vh] w-[100vw] justify-center items-center">
-      <div className=" rounded-lg border-2 border-slate-300 flex gap-2 flex-wrap p-4 justify-center items-center min-w-80 h-fit min-h-[350px] bg-violet-600 bg-[url('/images/checked_back.png')] bg-cover">
+    <div className=" flex md:gap-10 h-[80%] w-[80%] md:h-[80vh] md:w-[100vw] justify-center items-center flex-col md:flex-row m-auto md:m-0">
+      <div className=" rounded-lg  border-2 border-slate-300 flex gap-2 flex-wrap p-4 justify-center items-center min-w-80  max-w-[40%] max-h-[350px] md:h-fit min-h-[350px] bg-violet-600 bg-[url('/images/checked_back.png')] bg-cover overflow-scroll md:overflow-x-hidden md:overflow-y-auto">
         {file.map((e) => {
           return (
             <img
               src={e.data_url}
-              className={e.file.name}
+              className=" max-h-[80%] max-w-[70%] md:h-[300px] md:w-[300px]"
               alt=""
-              height="200px"
-              width="300px"
+              // height="200px"
+              // width="300px"
             />
           );
         })}
       </div>
-      <div className="min-w-60 h-[370px] flex flex-col gap-2 mt-7">
+      <div className="min-w-60 h-[370px] flex flex-col-reverse gap-2 mt-7">
         <UsefulTip />
         <button
           onClick={() => {

@@ -3,7 +3,7 @@ import React from "react";
 const UsefulTip = () => {
   return (
     <>
-      <div className=" min-h-[55%] bg-gray-100 p-5 flex flex-col rounded-lg border-2 ">
+      <div className=" min-h-[55%] bg-gray-100 p-5 flex flex-col rounded-lg border-2 mb-5 md:mb-0">
         <div>
           <p>Useful tip 🥳</p>
           <p className="flex-wrap"> you can extend image using a new AI</p>

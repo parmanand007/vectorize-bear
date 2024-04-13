@@ -45,7 +45,7 @@ const UploadDisplay = ({ setFile }) => {
             <div className="upload__image-wrapper h-[100vh] flex items-center justify-center flex-col gap-4 ">
               {imageList.length == 0 && (
                 <div
-                  className="bg-gray-200 h-[300px] w-[40%] mx-auto flex flex-col items-center justify-center  border-dotted rounded-xl border-2 border-gray-400 gap-4 hover:cursor-pointer"
+                  className="bg-gray-200 h-[300px]  w-[90%] md:w-[40%] mx-auto flex flex-col items-center justify-center  border-dotted rounded-xl border-2 border-gray-400 gap-4 hover:cursor-pointer"
                   style={isDragging ? { color: "red" } : null}
                   onClick={async () => {
                     if (!user) onOpenModal();
@@ -70,7 +70,7 @@ const UploadDisplay = ({ setFile }) => {
                 </div>
               )}
               {imageList.length > 0 && (
-                <div className="bg-gray-200 min-h-[300px]  min-w-[40%] max-w-[70%] p-2  mx-auto flex flex-wrap items-center justify-center  border-dotted rounded border-2 border-gray-400 gap-4">
+                <div className="bg-gray-200 min-h-[300px] w-[90%] md:min-w-[40%] md:max-w-[70%] p-2  mx-auto flex flex-wrap items-center justify-center  border-dotted rounded border-2 border-gray-400 gap-4">
                   {imageList.map((image, index) => (
                     <div key={index} className="">
                       <div className=" relative top-5 left-20">

@@ -3,6 +3,12 @@ import React, { useState } from "react";
 import { UserAuth } from "../../../contexts/UserContext";
 import SignInModel from "../../../utilities/SignInModel";
 import UsefulTip from "../../../components/UsefulTip";
+import {
+  FaAlignLeft,
+  FaAlignRight,
+  FaArrowLeft,
+  FaArrowRight,
+} from "react-icons/fa";
 
 const Download = () => {
   const { setIsUploaded, setIsVectorize, user } = UserAuth();
@@ -13,33 +19,59 @@ const Download = () => {
     setModalButtonType(e.target.innerText.toLowerCase());
     setOpen(true);
   };
+  const [mobileImageToggle, setMobileImageToggle] = useState(false);
+
   return (
-    <div className=" flex gap-10 h-[80vh] w-[100vw] justify-center items-center">
-      <div className="flex flex-col cursor-pointer ">
+    <div className=" flex flex-col gap-2 h-fit w-[100%] md:flex-row md:gap-10 md:h-[80vh] md:w-[100vw] justify-center items-center">
+      <div
+        className={
+          "flex-col cursor-pointer  md:flex " +
+          (!mobileImageToggle ? " flex" : " hidden")
+        }
+      >
         <p className="text-center p-2">Original Image </p>
         <div className=" flex rounded-lg border-2 border-slate-300  justify-center items-center min-w-80 h-[350px] bg-violet-600 bg-[url('/images/checked_back.png')] bg-cover">
           <img src="/images/imgback.png" alt="" height="200px" width="300px" />
         </div>
       </div>
-      <div className="flex flex-col cursor-pointer ">
-        <p className="text-center p-2">Vectorize Image </p>
+      <div
+        className={
+          "flex-col cursor-pointer  md:flex " +
+          (mobileImageToggle ? " flex" : " hidden")
+        }
+      >
+        <p className="text-center p-2">Vectorized Image </p>
         <div className=" flex rounded-lg border-2 border-slate-300  justify-center items-center min-w-80 h-[350px] bg-violet-600 bg-[url('/images/checked_back.png')] bg-cover ">
-          <img src="/images/imgback.png" alt="" height="200px" width="300px" />
+          <img src="/images/logo.png" alt="" height="200px" width="300px" />
         </div>
       </div>
-      <div className="min-w-60 h-[370px] flex flex-col gap-2 mt-14">
-        {/* <div className=" min-h-[60%] rounded-lg border-2 bg-gray-100 p-5 flex flex-col justify-between">
-          <div>
-            <p>Useful tip 🥳</p>
-            <p className="flex-wrap"> you can extend image using a new AI</p>
-          </div>
-          <button
-            type="button"
-            className="focus:outline-none items-end  text-white bg-orange-800  focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900 w-[90%] m-auto"
-          >
-            Extend my image
-          </button>
-        </div> */}
+      <div className="  w-80 flex justify-between mb-5 md:hidden">
+        <div
+          className={
+            "flex items-center gap-2 " +
+            (!mobileImageToggle ? "opacity-10 cursor-not-allowed" : "")
+          }
+          onClick={() => {
+            if (!mobileImageToggle) return;
+            else setMobileImageToggle(!mobileImageToggle);
+          }}
+        >
+          <FaArrowLeft /> Original
+        </div>
+        <div
+          className={
+            "flex items-center gap-2 " +
+            (mobileImageToggle ? "opacity-40 cursor-not-allowed" : "")
+          }
+          onClick={() => {
+            if (mobileImageToggle) return;
+            else setMobileImageToggle(!mobileImageToggle);
+          }}
+        >
+          Vectorized <FaArrowRight />
+        </div>
+      </div>
+      <div className="min-w-60 h-[370px] flex md:flex-col gap-2 flex-col-reverse  md:mt-14">
         <UsefulTip />
         <button
           type="button"
